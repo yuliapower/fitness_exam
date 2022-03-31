@@ -44,15 +44,15 @@ public class Subscription {
 
     // методполучения даты начала абонимента из строки и окончания действия абонимента
     public void parseStartDate() {
-        this.startDate = startDate;
+        //this.startDate = startDate;
         LocalDateTime parseDate = LocalDateTime.parse(startDate);
         System.out.println("Дата регистрации абонимента " + parseDate);
         if (typeSubscription == TypeSubscription.SINGLE) {
-            System.out.println("Дата окончания абонимента "+ parseDate.plusDays(1));
+            System.out.println("Дата окончания абонимента " + parseDate.plusDays(1));
             endDate = parseDate.plusDays(1);
         }
-        if (typeSubscription==TypeSubscription.DAILY||typeSubscription==TypeSubscription.FULL){
-            System.out.println("Дата окончания абонимента "+ parseDate.plusMonths(12));
+        if (typeSubscription == TypeSubscription.DAILY || typeSubscription == TypeSubscription.FULL) {
+            System.out.println("Дата окончания абонимента " + parseDate.plusMonths(12));
             endDate = parseDate.plusMonths(12);
         }
     }

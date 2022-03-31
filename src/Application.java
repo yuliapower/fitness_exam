@@ -11,21 +11,20 @@ public class Application {
         Fitness fitness1 = new Fitness(Zone.SWIMMING);
         fitness1.addToSwimming(subscription1);
         fitness1.addToSwimming(subscription2);
-        System.out.println(fitness1);
+        fitness1.infoSubscriptions();
 
         Fitness fitness2 = new Fitness(Zone.TRAINING);
         fitness2.addSubscription(subscription1);
         fitness2.addSubscription(subscription2);
-        System.out.println(fitness2);
+        fitness2.infoSubscriptions();
 
         Fitness fitness3 = new Fitness(Zone.GROUP);
         fitness3.addToGroup(subscription1);
         fitness3.addToGroup(subscription2);
         //  fitness3.closeFitness();
-        System.out.println(fitness3);
         //   LocalDateTime current1 = LocalDateTime.now();
         // System.out.println("текущая дата и время " + current1);
-
+        fitness3.infoSubscriptions();
 
     }
 }

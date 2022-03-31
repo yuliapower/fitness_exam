@@ -79,11 +79,14 @@ public class Fitness {
     }
 
     //метод вывода информации о клиенте при регистрации и в кокую зону
-    //Фамилия Имя Посещаемая зона (бассейн/тренажерный зал/групповые занятия)
-    //Дата и время посещения
     public void info(Subscription subscription) {
         System.out.println("Абонемент " + subscription.getOwner().getName() + " " + subscription.getOwner().getSurname() + " зарегестрирован в зоне " + zone.name());
         System.out.println("Дата и время посещения " + currentDate);
+    }
+
+    // метод вывода информации о посетителях
+    public void infoSubscriptions() {
+        System.out.println("Посетители " + zone.name() + Arrays.toString(subscriptions));
     }
 
     @Override
