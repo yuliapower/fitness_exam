@@ -7,7 +7,6 @@ public class Subscription {
     private LocalDateTime endDate;
     //  private LocalDateTime finishData;
 
-
     //конструктор
 
     public Subscription(TypeSubscription typeSubscription, Owner owner, String startDate) {
@@ -46,15 +45,16 @@ public class Subscription {
     public void parseStartDate() {
         //this.startDate = startDate;
         LocalDateTime parseDate = LocalDateTime.parse(startDate);
-        System.out.println("Дата регистрации абонимента " + parseDate);
-        if (typeSubscription == TypeSubscription.SINGLE) {
-            System.out.println("Дата окончания абонимента " + parseDate.plusDays(1));
-            endDate = parseDate.plusDays(1);
+        LocalDateTime currentDate = LocalDateTime.now();
+        boolean after = parseDate.isAfter(currentDate);
+        if (after){
+            throw new IllegalArgumentException("Дата регистрации абонемента не может быть больше даты сегодняшнего дня");
         }
-        if (typeSubscription == TypeSubscription.DAILY || typeSubscription == TypeSubscription.FULL) {
-            System.out.println("Дата окончания абонимента " + parseDate.plusMonths(12));
-            endDate = parseDate.plusMonths(12);
-        }
+        System.out.println("Дата регистрации абонимента " + getOwner().getName() + " " + getOwner().getSurname() + " : " +parseDate);
+        endDate = parseDate.plus(this.typeSubscription.getExpire(), this.typeSubscription.getValue());
+        System.out.println("Дата окончания абонимента " + endDate);
+
+
     }
 
 
