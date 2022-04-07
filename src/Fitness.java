@@ -7,13 +7,13 @@ public class Fitness {
     private final Subscription[] gym = new Subscription[20];
     private final Subscription[] pool = new Subscription[20];
     private final Subscription[] group = new Subscription[20];
-    LocalDateTime currentDate=LocalDateTime.now();
+    LocalDateTime currentDate = LocalDateTime.now();
 
     public Fitness() {
     }
 
     // метод добавления абонементов в желаемые зоны
-    public void addSubscriptions(Subscription subscription, Zone zone){
+    public void addSubscriptions(Subscription subscription, Zone zone) {
         boolean after = currentDate.isAfter(subscription.getEndDate());
         if (after) {
             System.out.println("Ваш абонемент просрочен");
@@ -24,7 +24,7 @@ public class Fitness {
             return;
         }
         if ((subscription.getTypeSubscription() == TypeSubscription.FULL || subscription.getTypeSubscription() == TypeSubscription.SINGLE) &&
-                ( currentDate.getHour() < 8 || currentDate.getHour() > 22)) {
+                (currentDate.getHour() < 8 || currentDate.getHour() > 22)) {
             System.out.println("По полному и разовому абонементу посещать фитнес клуб раньше 8 и позже 22 часов не имеет возможности");
             return;
         }
@@ -33,15 +33,9 @@ public class Fitness {
                 System.out.println("Набор в тренажерный зал закрыт");
                 return;
             }
-            for (int i = 0; i < gym.length; i++) {
-                if (gym[i] == null) {
-                    gym[i] = subscription;
-                    info(subscription, Zone.TRAINING);
-                    return;
-                }
-            }
+          addTo(Zone.TRAINING,subscription,gym);
         }
-        if (zone.equals(Zone.SWIMMING)){
+        if (zone.equals(Zone.SWIMMING)) {
             if (subscription.getTypeSubscription() == TypeSubscription.DAILY) {
                 System.out.println("По дневному абонементу посещать бассейн не имеет возможности");
             }
@@ -50,16 +44,10 @@ public class Fitness {
                 return;
             }
             if (subscription.getTypeSubscription() != TypeSubscription.DAILY) {
-                for (int i = 0; i < pool.length; i++) {
-                    if (pool[i] == null) {
-                        pool[i] = subscription;
-                        info(subscription, Zone.SWIMMING);
-                        return;
-                    }
-                }
+               addTo(Zone.SWIMMING,subscription,pool);
             }
         }
-        if (zone.equals(Zone.GROUP)){
+        if (zone.equals(Zone.GROUP)) {
             if (subscription.getTypeSubscription() == TypeSubscription.SINGLE) {
                 System.out.println("По разовому абонементу посещать групповые занятия не имеет возможности");
             }
@@ -67,17 +55,20 @@ public class Fitness {
                 System.out.println("Набор на групповые занятия закрыт");
                 return;
             }
-            if (subscription.getTypeSubscription() != TypeSubscription.SINGLE){
-                for (int i = 0; i < group.length; i++) {
-                    if (group[i] == null) {
-                        group[i] = subscription;
-                        info(subscription, Zone.GROUP);
-                        return;
-                    }
+            if (subscription.getTypeSubscription() != TypeSubscription.SINGLE) {
+                addTo(Zone.GROUP,subscription,group);
                 }
             }
         }
 
+    private void addTo(Zone zone,Subscription subscription,Subscription[] subscriptions){
+        for (int i = 0; i < subscriptions.length; i++) {
+            if (subscriptions[i] == null) {
+                subscriptions[i] = subscription;
+                info(subscription, zone);
+                return;
+            }
+        }
     }
 
     // метод закрытия фитнеса
